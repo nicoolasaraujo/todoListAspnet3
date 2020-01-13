@@ -7,6 +7,7 @@ namespace TodoList.Contracts
 {
     public interface IRepository<T>
     {
+        IEnumerable<T> FindAll();
         IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression);
         T Create(T entity);
         void Update(T entity);

@@ -40,7 +40,11 @@ namespace TodoList
             services.AddScoped<ITodoListRepository, TodoListRepository>();
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            options.JsonSerializerOptions.PropertyNamingPolicy = null;
+        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

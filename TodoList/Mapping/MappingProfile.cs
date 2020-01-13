@@ -1,4 +1,5 @@
 using AutoMapper;
+using TodoList.Models;
 using TodoList.Resource;
 
 namespace TodoList.Mapping
@@ -7,24 +8,16 @@ namespace TodoList.Mapping
     {
         public MappingProfile()
         {
+            // Resource to Domain
             CreateMap<SaveTodoList, Models.TodoList>();
             CreateMap<TodoListResource, Models.TodoList>();
+            CreateMap<SaveItemResource, TodoItem>().ForMember(todoItem => todoItem.TodoList, dto => dto.MapFrom(x => new Models.TodoList() { Id = x.TodoList}));
+            CreateMap<TodoItemResource, TodoItem>().ForMember(todoItem => todoItem.TodoList, dto => dto.MapFrom(x => new Models.TodoList() { Id = x.TodoList}));
 
-
+            // Domain to Resource
             CreateMap<Models.TodoList, TodoListResource>();
             CreateMap<Models.TodoList, SaveTodoList>();
-            CreateMap<Models.TodoList, TodoListResource>();
+            CreateMap<TodoItem, TodoItemResource>().ForMember(resource => resource.TodoList, item => item.MapFrom(data => data.TodoList.Id));
         }
-        // Resource to Domain
-    
-    // CreateMap<SaveUserResource, User>();
-    // CreateMap<SavePetResource, Pet>().ForMember(pet => pet.PetUser, dto => dto.MapFrom(x => x.Users.Select(user => new UserPet() { UserCode = new Guid(user) })));
-    // CreateMap<PetResource, Pet>().ForMember(pet => pet.PetUser, dto => dto.MapFrom(x => x.Users.Select(user => new UserPet() { UserCode = new Guid(user), PetCode = x.Code })));
-
-    // // Domain to Resource
-    // CreateMap<User, UserResource>();
-    // CreateMap<Pet, SavePetResource>();
-    // CreateMap<Pet, PetResource>().ForMember(rscr => rscr.Users, pet => pet.MapFrom(data => data.PetUser.Select(petUser => petUser.UserCode.ToString().ToList())));
-
     }
 }

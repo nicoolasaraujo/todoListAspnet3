@@ -27,7 +27,7 @@ namespace TodoList.Repositories
             return this.RepositoryContext.Set<T>().Where(expression).AsNoTracking();
         }
 
-        public T Create(T entity)
+        public virtual T Create(T entity)
         {
             var result = this.RepositoryContext.Set<T>().Add(entity).Entity;
             this.RepositoryContext.SaveChanges();
